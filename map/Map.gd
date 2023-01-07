@@ -89,6 +89,7 @@ func _spown_good():
 				goodArray.append(walker)
 				var b = good.instance()
 				b.connect('_on_get_a_point', self, '_on_get_a_point_s')
+				b.connect('_on_get_a_point', $scoreBord, '_on_get_a_point_handel')
 				b.global_position = (walker*CellSize)+(CellSize/2)
 				add_child(b)
 				borders.set_cellv(b.global_position, -1)
@@ -116,6 +117,7 @@ func _spown_denger():
 
 
 func _ready():
+	$scoreBord.hide()
 	rng.randomize()
 	_init_grid()
 	#_clear_tilemaps()

@@ -10,8 +10,10 @@ onready var denger_blocs = preload("res://tiles/denger_blocs.tscn")
 func _ready():
 	pass # Replace with function body.
 
-
+func _on_get_a_point_handel():
+	print("point")
 func _show_game_end():
+	self.show()
 	print("game end")
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
