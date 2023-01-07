@@ -16,27 +16,37 @@ class_name Player
 
 onready var collision =$CollisionShape2D
 
-export (int) var speed = 300
-
+export (float) var speed = 400
+export (float) var friction = 0.01
 
 
 #onready var target = position
-var velocity = Vector2.ZERO
+var velocity = Vector2(0, 0).rotated(rotation)
 var movmentArray = []
 var move =false
 var indexOfMov = 0
 
 func _physics_process(delta):
-	if (move ==true && movmentArray.size()>0):
-		for i in get_slide_count():
-			var collision = get_slide_collision(i)
-		velocity = (movmentArray[indexOfMov] - position).normalized() * speed
-		# rotation = velocity.angle()
-		if (movmentArray[indexOfMov] - position).length() > 5:
-			velocity = move_and_slide(velocity)
-		else:
-			if (indexOfMov< movmentArray.size()-1):
-				indexOfMov+=1
+	if Input.is_mouse_button_pressed(1): # when click Left mouse button
+		var target = get_global_mouse_position()
+		velocity = global_position.direction_to(target) * speed
+	var collision = move_and_collide(velocity * delta)
+	if collision:
+		velocity = velocity.bounce(collision.normal)
+		if collision.collider.has_method("hit"):
+			collision.collider.hit()
+	velocity = velocity.linear_interpolate(Vector2.ZERO, friction)
+			
+#	if (move ==true && movmentArray.size()>0):
+#		for i in get_slide_count():
+#			var collision = get_slide_collision(i)
+#		velocity = (movmentArray[indexOfMov] - position).normalized() * speed
+#		# rotation = velocity.angle()
+#		if (movmentArray[indexOfMov] - position).length() > 5:
+#			velocity = move_and_slide(velocity)
+#		else:
+#			if (indexOfMov< movmentArray.size()-1):
+#				indexOfMov+=1
 
 
 
