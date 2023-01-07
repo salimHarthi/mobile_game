@@ -5,8 +5,6 @@ onready var borders = $borders
 export(float,0,1) var prob_of_getting_tile = 0.06
 onready var good = preload("res://tiles/good.tscn")
 onready var denger_blocs = preload("res://tiles/denger_blocs.tscn")
-onready var timerText = preload("res://map/timerText.tscn")
-onready var score_bord = preload("res://assets/score.tscn")
 export(int) var max_number_of_good = 5
 export(int) var max_number_of_denger = 10
 var _points_collected = 0
@@ -110,6 +108,7 @@ func _spown_denger():
 				
 				var b = denger_blocs.instance()
 				b.global_position = (walker*CellSize)+(CellSize/2)
+				b.connect('_on_end_game', $scoreBord, '_show_game_end')
 				add_child(b)
 				borders.set_cellv(b.global_position, -1)
 				count+=1

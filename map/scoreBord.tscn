@@ -1,0 +1,22 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://map/scoreBord.gd" type="Script" id=1]
+
+[node name="scoreBord" type="Control"]
+margin_right = 512.0
+margin_bottom = 384.0
+script = ExtResource( 1 )
+
+[node name="Label" type="Label" parent="."]
+margin_left = 152.0
+margin_top = 64.0
+margin_right = 336.0
+margin_bottom = 128.0
+text = "sssssssssssssssss"
+
+[node name="Label2" type="Label" parent="."]
+margin_left = 160.0
+margin_top = 136.0
+margin_right = 360.0
+margin_bottom = 192.0
+text = "aaaaaaaaaaaaaaa"

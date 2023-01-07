@@ -1,6 +1,6 @@
 extends Area2D
 
-
+signal _on_end_game()
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
@@ -18,6 +18,7 @@ func _ready():
 
 func _on_denger_blocs_body_entered(body):
 	if body is Player:
-		get_tree().reload_current_scene()
+		#get_tree().reload_current_scene()
+		emit_signal("_on_end_game")
 	if body is Bordar:
 		body.set_cellv(body.world_to_map(self.global_position),-1)

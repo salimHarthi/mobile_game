@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://player/player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://tiles/borders.tscn" type="PackedScene" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://assets/arial.ttf" type="DynamicFontData" id=8]
 [ext_resource path="res://assets/score.gd" type="Script" id=9]
 [ext_resource path="res://map/timerText.tscn" type="PackedScene" id=10]
+[ext_resource path="res://map/scoreBord.tscn" type="PackedScene" id=11]
 
 [sub_resource type="DynamicFont" id=2]
 size = 50
@@ -59,6 +60,12 @@ script = ExtResource( 9 )
 margin_right = 248.0
 margin_bottom = 72.0
 custom_fonts/normal_font = SubResource( 1 )
+
+[node name="scoreBord" parent="." instance=ExtResource( 11 )]
+margin_left = 120.0
+margin_top = 288.0
+margin_right = 632.0
+margin_bottom = 672.0
 
 [connection signal="mypath_created" from="lineDrawer" to="player" method="_on_lineDrawer_mypath_created"]
 [connection signal="pressed" from="move" to="player" method="_on_move_pressed"]
