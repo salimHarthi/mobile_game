@@ -5,6 +5,8 @@ onready var borders = $borders
 export(float,0,1) var prob_of_getting_tile = 0.06
 onready var good = preload("res://tiles/good.tscn")
 onready var denger_blocs = preload("res://tiles/denger_blocs.tscn")
+onready var timerText = preload("res://map/timerText.tscn")
+onready var score_bord = preload("res://assets/score.tscn")
 export(int) var max_number_of_good = 5
 export(int) var max_number_of_denger = 10
 var _points_collected = 0
@@ -113,6 +115,7 @@ func _spown_denger():
 				count+=1
 		walker = Vector2(randi() % 101, randi() % 101)
 
+
 func _ready():
 	rng.randomize()
 	_init_grid()
@@ -121,6 +124,7 @@ func _ready():
 	_spawn_tiles()
 	_spown_good()
 	_spown_denger()
+
 
 
 

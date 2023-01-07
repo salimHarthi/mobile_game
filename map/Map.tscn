@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://player/player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://tiles/borders.tscn" type="PackedScene" id=2]
@@ -9,9 +9,14 @@
 [ext_resource path="res://map/Map.gd" type="Script" id=7]
 [ext_resource path="res://assets/arial.ttf" type="DynamicFontData" id=8]
 [ext_resource path="res://assets/score.gd" type="Script" id=9]
+[ext_resource path="res://map/timerText.tscn" type="PackedScene" id=10]
+
+[sub_resource type="DynamicFont" id=2]
+size = 50
+font_data = ExtResource( 8 )
 
 [sub_resource type="DynamicFont" id=1]
-size = 40
+size = 50
 font_data = ExtResource( 8 )
 
 [node name="Map" type="Node2D"]
@@ -40,18 +45,21 @@ margin_top = 1240.0
 margin_right = 61.0
 margin_bottom = 1260.0
 
-[node name="score" parent="." instance=ExtResource( 3 )]
-margin_left = 640.0
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="score" parent="CanvasLayer" instance=ExtResource( 3 )]
+margin_left = 600.0
 margin_top = 8.0
 margin_right = 704.0
-margin_bottom = 72.0
-custom_fonts/font = SubResource( 1 )
-text = ""
-align = 1
-valign = 1
+margin_bottom = 65.0
+custom_fonts/font = SubResource( 2 )
 script = ExtResource( 9 )
 
-[connection signal="on_send_score" from="." to="score" method="_on_Map_on_send_score"]
+[node name="timerText" parent="CanvasLayer" instance=ExtResource( 10 )]
+margin_right = 248.0
+margin_bottom = 72.0
+custom_fonts/normal_font = SubResource( 1 )
+
 [connection signal="mypath_created" from="lineDrawer" to="player" method="_on_lineDrawer_mypath_created"]
 [connection signal="pressed" from="move" to="player" method="_on_move_pressed"]
 [connection signal="pressed" from="move" to="lineDrawer" method="_on_move_pressed"]
