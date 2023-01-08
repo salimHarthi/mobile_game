@@ -5,7 +5,7 @@ onready var borders = $borders
 export(float,0,1) var prob_of_getting_tile = 0.06
 onready var good = preload("res://tiles/good.tscn")
 onready var denger_blocs = preload("res://tiles/denger_blocs.tscn")
-export(int) var max_number_of_good = 5
+export(int) var max_number_of_good =1
 export(int) var max_number_of_denger = 10
 var _points_collected = 0
 var rng = RandomNumberGenerator.new()
@@ -21,6 +21,8 @@ var Tiles = {
 }
 
 signal on_send_score(val)
+signal _on_end_game(v_scor,v_time,won_lose)
+
 func _init_grid():
 	grid = []
 	for x in width:
@@ -110,6 +112,7 @@ func _spown_denger():
 				var b = denger_blocs.instance()
 				b.global_position = (walker*CellSize)+(CellSize/2)
 				b.connect('_on_end_game', $scoreBord, '_show_game_end')
+				b.connect('_on_end_game', self, '_on_end_game_handeler')
 				add_child(b)
 				borders.set_cellv(b.global_position, -1)
 				count+=1
@@ -117,7 +120,7 @@ func _spown_denger():
 
 
 func _ready():
-	$scoreBord.hide()
+	$CanvasLayer/scoreBord.hide()
 	rng.randomize()
 	_init_grid()
 	#_clear_tilemaps()
@@ -135,4 +138,9 @@ func _on_get_a_point_s():
 	_points_collected +=1
 	emit_signal('on_send_score',_points_collected)
 	if _points_collected ==max_number_of_good:
-		get_tree().reload_current_scene()
+		emit_signal("_on_end_game",_points_collected,$CanvasLayer/timerText.time,'Won')
+		#get_tree().reload_current_scene()
+
+
+func _on_end_game_handeler():
+	emit_signal("_on_end_game",_points_collected,$CanvasLayer/timerText.time,'Lost')
