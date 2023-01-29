@@ -1,10 +1,9 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://player/player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://tiles/borders.tscn" type="PackedScene" id=2]
 [ext_resource path="res://assets/score.tscn" type="PackedScene" id=3]
 [ext_resource path="res://lineDrawer/lineDrawer.tscn" type="PackedScene" id=4]
-[ext_resource path="res://buttons/reset.tscn" type="PackedScene" id=6]
 [ext_resource path="res://map/Map.gd" type="Script" id=7]
 [ext_resource path="res://assets/arial.ttf" type="DynamicFontData" id=8]
 [ext_resource path="res://assets/score.gd" type="Script" id=9]
@@ -32,12 +31,6 @@ tile_data = PoolIntArray( -1, 0, 0, -65536, 0, 0, -65535, 0, 0, -65534, 0, 0, -6
 visible = false
 position = Vector2( 328, 464 )
 points = PoolVector2Array( 224, -168 )
-
-[node name="reset" parent="." instance=ExtResource( 6 )]
-margin_left = 16.0
-margin_top = 1240.0
-margin_right = 61.0
-margin_bottom = 1260.0
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 

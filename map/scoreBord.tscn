@@ -1,10 +1,11 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://map/scoreBord.gd" type="Script" id=1]
 [ext_resource path="res://map/Label.gd" type="Script" id=2]
 [ext_resource path="res://map/Label2.gd" type="Script" id=3]
 [ext_resource path="res://assets/arial.ttf" type="DynamicFontData" id=4]
 [ext_resource path="res://map/won_lose.gd" type="Script" id=5]
+[ext_resource path="res://buttons/startButton.tscn" type="PackedScene" id=6]
 
 [sub_resource type="DynamicFont" id=3]
 size = 60
@@ -23,7 +24,11 @@ margin_right = 512.0
 margin_bottom = 384.0
 script = ExtResource( 1 )
 
-[node name="won_lose" type="Label" parent="."]
+[node name="Panel" type="Panel" parent="."]
+margin_right = 512.0
+margin_bottom = 384.0
+
+[node name="won_lose" type="Label" parent="Panel"]
 margin_left = 216.0
 margin_top = 208.0
 margin_right = 360.0
@@ -31,23 +36,26 @@ margin_bottom = 280.0
 custom_fonts/font = SubResource( 3 )
 script = ExtResource( 5 )
 
-[node name="score" type="Label" parent="."]
+[node name="score" type="Label" parent="Panel"]
 margin_left = 152.0
 margin_top = 64.0
 margin_right = 336.0
-margin_bottom = 128.0
+margin_bottom = 132.0
 custom_fonts/font = SubResource( 1 )
 align = 1
 script = ExtResource( 2 )
 
-[node name="time" type="Label" parent="."]
+[node name="time" type="Label" parent="Panel"]
 margin_left = 160.0
 margin_top = 136.0
 margin_right = 360.0
-margin_bottom = 192.0
+margin_bottom = 204.0
 custom_fonts/font = SubResource( 2 )
 script = ExtResource( 3 )
 
-[connection signal="_on_send_score" from="." to="score" method="_on_scoreBord__on_send_score"]
-[connection signal="_on_send_score" from="." to="time" method="_on_scoreBord__on_send_score"]
-[connection signal="_on_send_score" from="." to="won_lose" method="_on_scoreBord__on_send_score"]
+[node name="Area2D" parent="." instance=ExtResource( 6 )]
+position = Vector2( 248, 456 )
+
+[connection signal="_on_send_score" from="." to="Panel/won_lose" method="_on_scoreBord__on_send_score"]
+[connection signal="_on_send_score" from="." to="Panel/score" method="_on_scoreBord__on_send_score"]
+[connection signal="_on_send_score" from="." to="Panel/time" method="_on_scoreBord__on_send_score"]

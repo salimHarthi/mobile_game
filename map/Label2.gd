@@ -2,7 +2,7 @@ extends Label
 
 
 func _ready():
-	self.text = str($"..".time)
+	self.text = str($"../..".time)
 
 
 
