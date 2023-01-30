@@ -14,20 +14,25 @@ var velocity = Vector2(0, 0).rotated(rotation)
 var move =false
 var indexOfMov = 0
 var mouseNotHeld = false;
+var target = Vector2.UP
+
 
 func _physics_process(delta):
+
 	if Input.is_mouse_button_pressed(1) and mouseNotHeld and move: # when click Left mouse button
 		mouseNotHeld= false
-		var target = get_global_mouse_position()
+		target = get_global_mouse_position()
+		look_at(target)
 		velocity = global_position.direction_to(target) * speed
+		
 	if not Input.is_mouse_button_pressed(1):
 		mouseNotHeld= true
 		mouseNotHeld= true
 	var collision = move_and_collide(velocity * delta)
 	if collision:
 		velocity = velocity.bounce(collision.normal)
-		if collision.collider.has_method("hit"):
-			collision.collider.hit()
+		look_at(velocity)
+			
 		# remove inner walls upon collision
 		if collision.collider is InnerWals: #Bordar
 			var tile_pos = collision.collider.world_to_map(position)
@@ -35,7 +40,7 @@ func _physics_process(delta):
 			collision.collider.set_cellv(tile_pos,-1)
 			
 	velocity = velocity.linear_interpolate(Vector2.ZERO, friction)
-
+	
 
 
 func _on_Map__on_end_game(v_scor, v_time, won_lose):
