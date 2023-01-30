@@ -1,7 +1,7 @@
 extends Node2D
 class_name GameMap
 
-onready var borders = $borders
+onready var borders = $innerWals
 export(float,0,1) var prob_of_getting_tile = 0.06
 onready var good = preload("res://tiles/good.tscn")
 onready var denger_blocs = preload("res://tiles/denger_blocs.tscn")
@@ -22,7 +22,7 @@ var Tiles = {
 
 signal on_send_score(val)
 signal _on_end_game(v_scor,v_time,won_lose)
-
+signal _on_end_game_start()
 func _init_grid():
 	grid = []
 	for x in width:
@@ -123,11 +123,12 @@ func _ready():
 	$CanvasLayer/scoreBord.hide()
 	rng.randomize()
 	_init_grid()
-	#_clear_tilemaps()
+	_clear_tilemaps()
 	_create_random_path()
 	_spawn_tiles()
 	_spown_good()
 	_spown_denger()
+	emit_signal("_on_end_game_start")
 
 
 
@@ -138,9 +139,12 @@ func _on_get_a_point_s():
 	_points_collected +=1
 	emit_signal('on_send_score',_points_collected)
 	if _points_collected ==max_number_of_good:
-		emit_signal("_on_end_game",_points_collected,$CanvasLayer/timerText.time,'Won')
-		#get_tree().reload_current_scene()
+		var totalScore =str(_points_collected)+"/"+str(max_number_of_good)
+		emit_signal("_on_end_game",totalScore,$CanvasLayer/timerText.time,'Won')
+		get_tree().paused=true
 
 
 func _on_end_game_handeler():
-	emit_signal("_on_end_game",_points_collected,$CanvasLayer/timerText.time,'Lost')
+	var totalScore =str(_points_collected)+"/"+str(max_number_of_good)
+	emit_signal("_on_end_game",totalScore,$CanvasLayer/timerText.time,'Lost')
+	get_tree().paused=true

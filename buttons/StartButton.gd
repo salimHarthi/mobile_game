@@ -8,6 +8,7 @@ extends Area2D
 
 
 func _on_Area2D_input_event(viewport, event, shape_idx):
-	if Input.is_mouse_button_pressed(1) and event.pressed :
-		print("Clicked")
+	
+	if Input.is_mouse_button_pressed(1) :
 		get_tree().reload_current_scene()
+		get_tree().paused=false
