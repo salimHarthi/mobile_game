@@ -7,7 +7,7 @@ onready var good = preload("res://tiles/good.tscn")
 onready var denger_blocs = preload("res://tiles/denger_blocs.tscn")
 onready var boost_blocs = preload("res://tiles/boost.tscn")
 onready var player = $player
-export(int) var max_number_of_good =1
+export(int) var max_number_of_good =3
 export(int) var max_number_of_denger = 10
 var _points_collected = 0
 var rng = RandomNumberGenerator.new()
@@ -96,6 +96,7 @@ func _spown_good():
 				var b = good.instance()
 				b.connect('_on_get_a_point', self, '_on_get_a_point_s')
 				b.connect('_on_get_a_point', $scoreBord, '_on_get_a_point_handel')
+				self.connect('on_send_score', $CanvasLayer/score, '_on_send_score_handel')
 				b.global_position = (walker*CellSize)+(CellSize/2)
 				add_child(b)
 				borders.set_cellv(b.global_position, -1)

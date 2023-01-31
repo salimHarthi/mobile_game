@@ -18,5 +18,6 @@ func _ready():
 	
 
 
-func _on_Map_on_send_score(val):
+func _on_send_score_handel(val):
+	print(val)
 	self.text = str(val)+"/"+str(maps.max_number_of_good)
