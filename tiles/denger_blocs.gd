@@ -20,5 +20,5 @@ func _on_denger_blocs_body_entered(body):
 	if body is Player:
 		#get_tree().reload_current_scene()
 		emit_signal("_on_end_game")
-	if body is Bordar:
+	if body is InnerWals:
 		body.set_cellv(body.world_to_map(self.global_position),-1)

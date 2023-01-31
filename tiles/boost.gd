@@ -20,5 +20,5 @@ func _on_boost_body_entered(body):
 	if body is Player:
 		emit_signal("_on_get_boost")
 		self.queue_free()
-	if body is Bordar:
+	if body is InnerWals:
 		body.set_cellv(body.world_to_map(self.global_position),-1)
