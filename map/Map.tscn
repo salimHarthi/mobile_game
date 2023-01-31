@@ -1,9 +1,10 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://player/player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://tiles/borders.tscn" type="PackedScene" id=2]
 [ext_resource path="res://assets/score.tscn" type="PackedScene" id=3]
 [ext_resource path="res://tiles/innerWals.gd" type="Script" id=4]
+[ext_resource path="res://player/new_resource.tres" type="Resource" id=5]
 [ext_resource path="res://map/Map.gd" type="Script" id=7]
 [ext_resource path="res://assets/arial.ttf" type="DynamicFontData" id=8]
 [ext_resource path="res://assets/score.gd" type="Script" id=9]
@@ -20,6 +21,7 @@ font_data = ExtResource( 8 )
 
 [node name="Map" type="Node2D"]
 script = ExtResource( 7 )
+playerState = ExtResource( 5 )
 
 [node name="player" parent="." instance=ExtResource( 1 )]
 position = Vector2( 672, 1184 )

@@ -33,13 +33,19 @@ _global_script_classes=[ {
 "class": "Player",
 "language": "GDScript",
 "path": "res://player/player.gd"
+}, {
+"base": "Resource",
+"class": "PlayerResource",
+"language": "GDScript",
+"path": "res://player/playerRescurce.gd"
 } ]
 _global_script_class_icons={
 "Boost": "",
 "Bordar": "",
 "GameMap": "",
 "InnerWals": "",
-"Player": ""
+"Player": "",
+"PlayerResource": ""
 }
 
 [application]

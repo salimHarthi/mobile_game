@@ -6,10 +6,13 @@ export(float,0,1) var prob_of_getting_tile = 0.06
 onready var good = preload("res://tiles/good.tscn")
 onready var denger_blocs = preload("res://tiles/denger_blocs.tscn")
 onready var boost_blocs = preload("res://tiles/boost.tscn")
+onready var player = $player
 export(int) var max_number_of_good =1
 export(int) var max_number_of_denger = 10
 var _points_collected = 0
 var rng = RandomNumberGenerator.new()
+
+export(Resource) var playerState
 
 var CellSize = Vector2(64,64)
 var width = int(720/CellSize.x)
@@ -132,6 +135,7 @@ func _spown_boost():
 				goodArray.append(walker)
 				var b = boost_blocs.instance()
 				b.connect('_on_get_boost', self, '_on_get_boost_handler')
+				b.connect('_on_get_boost', player, '_on_get_boost_handler')
 				b.global_position = (walker*CellSize)+(CellSize/2)
 				add_child(b)
 				borders.set_cellv(b.global_position, -1)
@@ -169,4 +173,4 @@ func _on_end_game_handeler():
 	get_tree().paused=true
 
 func _on_get_boost_handler():
-	print('got boost')
+	print(playerState.boosts)
