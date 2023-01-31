@@ -5,6 +5,7 @@ onready var borders = $innerWals
 export(float,0,1) var prob_of_getting_tile = 0.06
 onready var good = preload("res://tiles/good.tscn")
 onready var denger_blocs = preload("res://tiles/denger_blocs.tscn")
+onready var boost_blocs = preload("res://tiles/boost.tscn")
 export(int) var max_number_of_good =1
 export(int) var max_number_of_denger = 10
 var _points_collected = 0
@@ -118,7 +119,24 @@ func _spown_denger():
 				count+=1
 		walker = Vector2(randi() % 101, randi() % 101)
 
+func _spown_boost():
+	var count = 0
+	var walker = Vector2(randi() % 101, randi() % 101)
+	var max_number_boost = (randf() * (6-1)) + 1
+	while count < max_number_boost:
 
+		if (walker.x >= 0 and 
+			walker.x < width and
+			walker.y >= 0 and
+			walker.y < height):
+				goodArray.append(walker)
+				var b = boost_blocs.instance()
+				b.connect('_on_get_boost', self, '_on_get_boost_handler')
+				b.global_position = (walker*CellSize)+(CellSize/2)
+				add_child(b)
+				borders.set_cellv(b.global_position, -1)
+				count+=1
+		walker = Vector2(randi() % 101, randi() % 101)
 func _ready():
 	$CanvasLayer/scoreBord.hide()
 	rng.randomize()
@@ -128,6 +146,7 @@ func _ready():
 	_spawn_tiles()
 	_spown_good()
 	_spown_denger()
+	_spown_boost()
 	emit_signal("_on_end_game_start")
 
 
@@ -148,3 +167,6 @@ func _on_end_game_handeler():
 	var totalScore =str(_points_collected)+"/"+str(max_number_of_good)
 	emit_signal("_on_end_game",totalScore,$CanvasLayer/timerText.time,'Lost')
 	get_tree().paused=true
+
+func _on_get_boost_handler():
+	print('got boost')
