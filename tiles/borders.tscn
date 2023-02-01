@@ -102,7 +102,6 @@ points = PoolVector2Array( 17.4445, 35.1389, 26.4722, 26.8056, 38.2778, 24.0278,
 3/z_index = 0
 
 [node name="borders" type="TileMap"]
-self_modulate = Color( 0.00392157, 0.00392157, 0.00392157, 1 )
 tile_set = SubResource( 2 )
 format = 1
 script = ExtResource( 2 )
