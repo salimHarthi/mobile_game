@@ -4,7 +4,9 @@ class_name Player
 
 
 onready var collision =$CollisionShape2D
-
+onready var idleAnimation =$defult
+onready var boostAnimation =$onmoving
+onready var animationTimer = $animation
 
 export(Resource) var stats
 
@@ -14,11 +16,16 @@ var move =false
 var indexOfMov = 0
 var mouseNotHeld = false;
 var target = Vector2.UP
-
+var animation = {
+	"moving":"movingAnimation",
+	"startMoving":"startMovingAnimation"
+}
+var animationTimout = true
 
 func _physics_process(delta):
-
+	#_animation()
 	if Input.is_mouse_button_pressed(1) and mouseNotHeld and move and stats.boosts>0: # when click Left mouse button
+		_setup_timer()
 		mouseNotHeld= false
 		target = get_global_mouse_position()
 		look_at(target)
@@ -53,3 +60,22 @@ func _on_Map__on_end_game_start():
 
 func _on_get_boost_handler():
 	stats.addBoost(1)
+
+#func _animation():
+#	if !animationTimout:
+#		boostAnimation.play(animation.startMoving)
+#	else:
+#		idleAnimation.play(animation.moving)
+
+		
+		
+	
+
+func _setup_timer():
+	animationTimer.start()
+	boostAnimation.show()
+	animationTimout=false
+	
+func _on_animation_timeout():
+	animationTimout=true
+	boostAnimation.hide()
