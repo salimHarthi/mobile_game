@@ -46,8 +46,7 @@ func _physics_process(delta):
 		if collision.collider is InnerWals: #Bordar
 			var tile_pos = tilemap.world_to_map(collision.position - collision.normal)
 			var newExplostion= explostion.instance()
-
-			newExplostion.global_position = tilemap.map_to_world(tile_pos)  
+			newExplostion.global_position = tilemap.map_to_world(tile_pos) +Vector2(32,32)
 			get_parent().call_deferred("add_child",newExplostion)
 			collision.collider.set_cellv(tile_pos,-1)
 			
