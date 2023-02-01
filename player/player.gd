@@ -7,6 +7,8 @@ onready var collision =$CollisionShape2D
 onready var idleAnimation =$defult
 onready var boostAnimation =$onmoving
 onready var animationTimer = $animation
+onready var explostion = preload("res://assets/explostion.tscn")
+onready var tilemap = $"../innerWals"
 
 export(Resource) var stats
 
@@ -21,6 +23,7 @@ var animation = {
 	"startMoving":"startMovingAnimation"
 }
 var animationTimout = true
+
 
 func _physics_process(delta):
 	#_animation()
@@ -41,8 +44,11 @@ func _physics_process(delta):
 			
 		# remove inner walls upon collision
 		if collision.collider is InnerWals: #Bordar
-			var tile_pos = collision.collider.world_to_map(position)
-			tile_pos -= collision.normal  # colliding tile position
+			var tile_pos = tilemap.world_to_map(collision.position - collision.normal)
+			var newExplostion= explostion.instance()
+
+			newExplostion.global_position = tilemap.map_to_world(tile_pos)  
+			get_parent().call_deferred("add_child",newExplostion)
 			collision.collider.set_cellv(tile_pos,-1)
 			
 	velocity = velocity.linear_interpolate(Vector2.ZERO, stats.friction)

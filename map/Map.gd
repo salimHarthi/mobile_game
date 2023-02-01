@@ -75,7 +75,7 @@ func _spawn_tiles():
 				Tiles.empty:
 					pass
 				Tiles.borders:
-					borders.set_cellv(Vector2(x, y), 0)
+					borders.set_cellv(Vector2(x, y), (randf() * (3-0)) + 0)
 		
 		
 func _clear_tilemaps():
