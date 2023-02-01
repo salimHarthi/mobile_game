@@ -22,6 +22,9 @@ var goodArray = []
 var Tiles = {
 	"empty": -1,
 	"borders": 0,
+	"bad":1,
+	"boost":2,
+	"good":3
 }
 
 signal on_send_score(val)
@@ -92,15 +95,17 @@ func _spown_good():
 			walker.x < width and
 			walker.y >= 0 and
 			walker.y < height):
-				goodArray.append(walker)
-				var b = good.instance()
-				b.connect('_on_get_a_point', self, '_on_get_a_point_s')
-				b.connect('_on_get_a_point', $scoreBord, '_on_get_a_point_handel')
-				self.connect('on_send_score', $CanvasLayer/score, '_on_send_score_handel')
-				b.global_position = (walker*CellSize)+(CellSize/2)
-				add_child(b)
-				borders.set_cellv(b.global_position, -1)
-				count+=1
+				if grid[walker.x][walker.y]==-1:
+					goodArray.append(walker)
+					var b = good.instance()
+					b.connect('_on_get_a_point', self, '_on_get_a_point_s')
+					b.connect('_on_get_a_point', $scoreBord, '_on_get_a_point_handel')
+					self.connect('on_send_score', $CanvasLayer/score, '_on_send_score_handel')
+					b.global_position = (walker*CellSize)+(CellSize/2)
+					add_child(b)
+					borders.set_cellv(b.global_position, -1)
+					count+=1
+					grid[walker.x][walker.y] = Tiles.good
 		walker = Vector2(randi() % 101, randi() % 101)
 		
 func _spown_denger():
@@ -113,14 +118,15 @@ func _spown_denger():
 			walker.x < width and
 			walker.y >= 0 and
 			walker.y < height and !(walker in goodArray)):
-				
-				var b = denger_blocs.instance()
-				b.global_position = (walker*CellSize)+(CellSize/2)
-				b.connect('_on_end_game', $scoreBord, '_show_game_end')
-				b.connect('_on_end_game', self, '_on_end_game_handeler')
-				add_child(b)
-				borders.set_cellv(b.global_position, -1)
-				count+=1
+				if grid[walker.x][walker.y]==-1:
+					var b = denger_blocs.instance()
+					b.global_position = (walker*CellSize)+(CellSize/2)
+					b.connect('_on_end_game', $scoreBord, '_show_game_end')
+					b.connect('_on_end_game', self, '_on_end_game_handeler')
+					add_child(b)
+					borders.set_cellv(b.global_position, -1)
+					count+=1
+					grid[walker.x][walker.y] = Tiles.bad
 		walker = Vector2(randi() % 101, randi() % 101)
 
 func _spown_boost():
@@ -133,14 +139,16 @@ func _spown_boost():
 			walker.x < width and
 			walker.y >= 0 and
 			walker.y < height):
-				goodArray.append(walker)
-				var b = boost_blocs.instance()
-				b.connect('_on_get_boost', self, '_on_get_boost_handler')
-				b.connect('_on_get_boost', player, '_on_get_boost_handler')
-				b.global_position = (walker*CellSize)+(CellSize/2)
-				add_child(b)
-				borders.set_cellv(b.global_position, -1)
-				count+=1
+				if grid[walker.x][walker.y]==-1:
+					goodArray.append(walker)
+					var b = boost_blocs.instance()
+					b.connect('_on_get_boost', self, '_on_get_boost_handler')
+					b.connect('_on_get_boost', player, '_on_get_boost_handler')
+					b.global_position = (walker*CellSize)+(CellSize/2)
+					add_child(b)
+					borders.set_cellv(b.global_position, -1)
+					count+=1
+					grid[walker.x][walker.y] = Tiles.boost
 		walker = Vector2(randi() % 101, randi() % 101)
 func _ready():
 	$CanvasLayer/scoreBord.hide()
@@ -149,9 +157,9 @@ func _ready():
 	_clear_tilemaps()
 	_create_random_path()
 	_spawn_tiles()
-	_spown_good()
 	_spown_denger()
 	_spown_boost()
+	_spown_good()
 	emit_signal("_on_end_game_start")
 
 

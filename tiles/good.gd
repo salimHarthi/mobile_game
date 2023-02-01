@@ -16,5 +16,7 @@ func _on_good_body_entered(body):
 		emit_signal("_on_get_a_point")
 		self.queue_free()
 		
-	if body is InnerWals:
+	elif body is InnerWals:
 		body.set_cellv(body.world_to_map(self.global_position),-1)
+		
+
