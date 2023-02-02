@@ -6,6 +6,10 @@
 [sub_resource type="CircleShape2D" id=8]
 radius = 25.2982
 
+[sub_resource type="AtlasTexture" id=9]
+atlas = ExtResource( 3 )
+region = Rect2( 24, 24, 16, 16 )
+
 [sub_resource type="AtlasTexture" id=5]
 atlas = ExtResource( 3 )
 region = Rect2( 128, 0, 64, 64 )
@@ -22,10 +26,6 @@ animations = [ {
 "speed": 5.0
 } ]
 
-[sub_resource type="AtlasTexture" id=9]
-atlas = ExtResource( 3 )
-region = Rect2( 24, 24, 16, 16 )
-
 [node name="denger_blocs" type="Area2D"]
 script = ExtResource( 2 )
 
@@ -33,22 +33,26 @@ script = ExtResource( 2 )
 rotation = 1.03673
 shape = SubResource( 8 )
 
+[node name="Sprite" type="Sprite" parent="."]
+modulate = Color( 1, 0.0235294, 0.0235294, 1 )
+position = Vector2( -4.76837e-07, -2.38419e-07 )
+scale = Vector2( 2, 1 )
+texture = SubResource( 9 )
+
 [node name="AnimatedSprite2" type="AnimatedSprite" parent="."]
-position = Vector2( 33, 0.499994 )
+modulate = Color( 1, 0.513726, 0.513726, 1 )
+position = Vector2( 33, 2.49999 )
 scale = Vector2( 1.96497, 2 )
 frames = SubResource( 7 )
 frame = 1
 playing = true
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
-position = Vector2( -32, 0.5 )
+modulate = Color( 1, 0.513726, 0.513726, 1 )
+position = Vector2( -32, 2.5 )
 scale = Vector2( 2, 2.01563 )
 frames = SubResource( 7 )
 playing = true
 flip_h = true
-
-[node name="Sprite" type="Sprite" parent="."]
-scale = Vector2( 1.75, 1.75 )
-texture = SubResource( 9 )
 
 [connection signal="body_entered" from="." to="." method="_on_denger_blocs_body_entered"]
