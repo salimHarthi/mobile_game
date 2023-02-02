@@ -7,6 +7,8 @@ onready var good = preload("res://tiles/good.tscn")
 onready var denger_blocs = preload("res://tiles/denger_blocs.tscn")
 onready var boost_blocs = preload("res://tiles/boost.tscn")
 onready var player = $player
+onready var player_params = $player_params
+
 export(int) var max_number_of_good =3
 export(int) var max_number_of_denger = 10
 var _points_collected = 0
@@ -16,7 +18,7 @@ export(Resource) var playerState
 
 var CellSize = Vector2(64,64)
 var width = int(720/CellSize.x)
-var height = 1280/CellSize.y-2
+var height = (1280/CellSize.y)-2
 var grid = []
 var goodArray = []
 var Tiles = {
@@ -36,6 +38,10 @@ func _init_grid():
 		grid.append([])
 		for y in (height):
 			grid[x].append(-1);
+
+	for x in width:
+		grid[x].remove(0)
+		grid[x].push_front(-2)
 
 func GetRandomDirection():
 	var directions = [[-1, 0], [1, 0], [0, 1], [0, -1]]
@@ -62,8 +68,9 @@ func _create_random_path():
 			walker.y + random_direction.y < height):
 				
 				walker += random_direction
-				if prob_of_getting_tile >= randf():
-					grid[walker.x][walker.y] = Tiles.borders
+				if grid[walker.x][walker.y]==-1:
+					if prob_of_getting_tile >= randf():
+						grid[walker.x][walker.y] = Tiles.borders
 				itr += 1
 				
 				
@@ -144,6 +151,7 @@ func _spown_boost():
 					var b = boost_blocs.instance()
 					b.connect('_on_get_boost', self, '_on_get_boost_handler')
 					b.connect('_on_get_boost', player, '_on_get_boost_handler')
+					b.connect('_on_get_boost', player_params, '_on_get_boost_handler')
 					b.global_position = (walker*CellSize)+(CellSize/2)
 					add_child(b)
 					borders.set_cellv(b.global_position, -1)
@@ -154,7 +162,7 @@ func _ready():
 	$CanvasLayer/scoreBord.hide()
 	rng.randomize()
 	_init_grid()
-	_clear_tilemaps()
+	#_clear_tilemaps()
 	_create_random_path()
 	_spawn_tiles()
 	_spown_denger()
@@ -187,7 +195,6 @@ func _on_get_boost_handler():
 
 
 func _on_player__on_player_stoped():
-	print('ccccccccccc')
 	if playerState.boosts == 0:
 		var totalScore =str(_points_collected)+"/"+str(max_number_of_good)
 		emit_signal("_on_end_game",totalScore,$CanvasLayer/timerText.time,'Lost')

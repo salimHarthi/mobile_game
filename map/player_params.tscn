@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://map/player_params.gd" type="Script" id=2]
+[ext_resource path="res://player/new_resource.tres" type="Resource" id=3]
+
+[node name="player_params" type="Control"]
+script = ExtResource( 2 )
+stats = ExtResource( 3 )
+
+[node name="ColorRect" type="ColorRect" parent="."]
+margin_top = 1216.0
+margin_right = 720.0
+margin_bottom = 1280.0
+color = Color( 0, 0, 0, 1 )
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+margin_top = 1216.0
+margin_right = 720.0
+margin_bottom = 1280.0

@@ -1,7 +1,8 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://assets/Player_charged_donut_shot (16 x 16).png" type="Texture" id=1]
 [ext_resource path="res://tiles/good.gd" type="Script" id=2]
+[ext_resource path="res://assets/Player_donut_shot (16 x 16).png" type="Texture" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 32, 32 )
@@ -30,6 +31,22 @@ animations = [ {
 "speed": 5.0
 } ]
 
+[sub_resource type="AtlasTexture" id=7]
+atlas = ExtResource( 3 )
+region = Rect2( 0, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=8]
+atlas = ExtResource( 3 )
+region = Rect2( 16, 0, 16, 16 )
+
+[sub_resource type="SpriteFrames" id=9]
+animations = [ {
+"frames": [ SubResource( 7 ), SubResource( 8 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
 [node name="good" type="Area2D"]
 script = ExtResource( 2 )
 
@@ -41,6 +58,11 @@ position = Vector2( 2.38419e-07, 2.38419e-07 )
 scale = Vector2( 6.5, 6.5 )
 frames = SubResource( 2 )
 frame = 2
+playing = true
+
+[node name="AnimatedSprite2" type="AnimatedSprite" parent="."]
+scale = Vector2( 4, 4 )
+frames = SubResource( 9 )
 playing = true
 
 [connection signal="body_entered" from="." to="." method="_on_good_body_entered"]

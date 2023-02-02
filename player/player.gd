@@ -10,6 +10,7 @@ onready var animationTimer = $animation
 onready var explostion = preload("res://assets/explostion.tscn")
 onready var tilemap = $"../innerWals"
 signal _on_player_stoped()
+signal _on_click()
 
 export(Resource) var stats
 
@@ -30,6 +31,7 @@ func _physics_process(delta):
 	
 	if Input.is_mouse_button_pressed(1) and mouseNotHeld and move and stats.boosts>0: # when click Left mouse button
 		_setup_timer()
+		emit_signal("_on_click")
 		mouseNotHeld= false
 		target = get_global_mouse_position()
 		look_at(target)
