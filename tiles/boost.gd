@@ -5,10 +5,12 @@ signal _on_get_boost()
 # var a = 2
 # var b = "text"
 
+onready var animations = $Sprite2/AnimationPlayer
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	animations.get_animation("upDown").set_loop(true)
+	animations.play("upDown")
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -16,6 +18,7 @@ func _ready():
 #	pass
 
 
+	
 func _on_boost_body_entered(body):
 	if body is Player:
 		emit_signal("_on_get_boost")
