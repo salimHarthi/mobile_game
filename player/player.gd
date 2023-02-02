@@ -9,6 +9,7 @@ onready var boostAnimation =$onmoving
 onready var animationTimer = $animation
 onready var explostion = preload("res://assets/explostion.tscn")
 onready var tilemap = $"../innerWals"
+signal _on_player_stoped()
 
 export(Resource) var stats
 
@@ -26,7 +27,7 @@ var animationTimout = true
 
 
 func _physics_process(delta):
-	#_animation()
+	
 	if Input.is_mouse_button_pressed(1) and mouseNotHeld and move and stats.boosts>0: # when click Left mouse button
 		_setup_timer()
 		mouseNotHeld= false
@@ -36,11 +37,12 @@ func _physics_process(delta):
 		stats.boosts -=1
 	if not Input.is_mouse_button_pressed(1):
 		mouseNotHeld= true
-		mouseNotHeld= true
+
 	var collision = move_and_collide(velocity * delta)
+	
 	if collision:
 		velocity = velocity.bounce(collision.normal)
-		#look_at(velocity)
+
 			
 		# remove inner walls upon collision
 		if collision.collider is InnerWals: #Bordar
@@ -51,7 +53,7 @@ func _physics_process(delta):
 			collision.collider.set_cellv(tile_pos,-1)
 			
 	velocity = velocity.linear_interpolate(Vector2.ZERO, stats.friction)
-	
+	_plyer_stoped(velocity)
 
 
 func _on_Map__on_end_game(v_scor, v_time, won_lose):
@@ -66,16 +68,6 @@ func _on_Map__on_end_game_start():
 func _on_get_boost_handler():
 	stats.addBoost(1)
 
-#func _animation():
-#	if !animationTimout:
-#		boostAnimation.play(animation.startMoving)
-#	else:
-#		idleAnimation.play(animation.moving)
-
-		
-		
-	
-
 func _setup_timer():
 	animationTimer.start()
 	boostAnimation.show()
@@ -84,3 +76,7 @@ func _setup_timer():
 func _on_animation_timeout():
 	animationTimout=true
 	boostAnimation.hide()
+
+func _plyer_stoped(v):
+	if abs(v.x)<1 and abs(v.y)<1 and move and abs(v.x)>0 and abs(v.y)>0 :
+		emit_signal("_on_player_stoped")

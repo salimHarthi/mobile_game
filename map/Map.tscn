@@ -79,3 +79,4 @@ margin_bottom = 1258.0
 [connection signal="_on_end_game" from="." to="player" method="_on_Map__on_end_game"]
 [connection signal="_on_end_game" from="." to="CanvasLayer/scoreBord" method="_on_Map__on_end_game"]
 [connection signal="_on_end_game_start" from="." to="player" method="_on_Map__on_end_game_start"]
+[connection signal="_on_player_stoped" from="player" to="." method="_on_player__on_player_stoped"]

@@ -183,3 +183,11 @@ func _on_end_game_handeler():
 
 func _on_get_boost_handler():
 	print(playerState.boosts)
+
+
+
+func _on_player__on_player_stoped():
+	print('ccccccccccc')
+	if playerState.boosts == 0:
+		var totalScore =str(_points_collected)+"/"+str(max_number_of_good)
+		emit_signal("_on_end_game",totalScore,$CanvasLayer/timerText.time,'Lost')
